@@ -1,3 +1,4 @@
+
 const Dinos = [
     {
         "species": "Triceratops",
@@ -73,81 +74,6 @@ const Dinos = [
     }
 ]
 
-
-// Create Dino Constructor
-function Dino( obj ) {
-    this.species = obj.species;
-    this.weight = obj.weight;
-    this.height = obj.height;
-    this.diet = obj.diet;
-    this.where = obj.where;
-    this.when = obj.when;
-    this.fact = obj.fact;
-}
-
-function dspInfo() {
-
-    let dinos = [];
-    
-    // Create Dino Objects
-    Dinos.forEach( element => dinos.push( new Dino( element ) ) );
-
-    // Use IIFE to get human data from form
-    (function() {
-        human.weight = document.getElementById('weight').value;
-        human.height = Number(document.getElementById('feet').value) * 12 + 
-            Number(document.getElementById('inches').value);
-        human.diet = document.getElementById('diet').value;
-        human.name = document.getElementById('name').value;
-    })();
-
-
-    // Generate Tiles for each Dino in Array
-    dinos.forEach(element => {
-        let tile = document.createElement('div');
-        tile.className = 'grid-item';
-
-        let h3 = document.createElement('h3');
-        h3.innerHTML = element.species;
-        tile.appendChild( h3 );
-
-        let img = document.createElement('img');
-        img.src = './images/' + element.species + '.png';
-        tile.appendChild( img );
-
-        // get fact
-        let fact = getFact( element );
-        let p = document.createElement('p');
-        p.innerHTML = fact;
-        tile.appendChild( p );
-
-        // Add tiles to DOM
-        document.getElementById("grid").appendChild( tile );
-    })
-
-    // Generate human tile
-    let tile = document.createElement('div');
-    tile.className = 'grid-item';
-
-    let h3 = document.createElement('h3');
-    h3.innerHTML = human.name;
-    tile.appendChild( h3 );
-
-    let img = document.createElement('img');
-    img.src = './images/' + 'human' + '.png';
-    tile.appendChild( img );
-
-    // Add tile to DOM
-    let parent = document.getElementById("grid");
-    parent.insertBefore(tile, parent.children[4]);
-
-    // Remove form from screen
-    document.getElementById("dino-compare").hidden = true;
-}
-
-// On button click, prepare and display infographic
-document.getElementById('btn').addEventListener('click', dspInfo );
-
 // Create Human Object
 let human = { height: 0, weight: 0, diet: "", name: "" };
 
@@ -160,7 +86,7 @@ function cmpWeight( weight )
 }
 
 // Create Dino Compare Method 2
-// NOTE: Weight in JSON file is height in inches.
+// NOTE: Height in JSON file is in inches.
 function cmpHeight( height )
 {
     let pct = Math.floor( ( height / human.height ) * 100 );
@@ -214,3 +140,75 @@ function getFact( element ) {
     return fact;
 }
 
+// Create Dino Constructor
+function Dino( obj ) {
+    this.species = obj.species;
+    this.weight = obj.weight;
+    this.height = obj.height;
+    this.diet = obj.diet;
+    this.where = obj.where;
+    this.when = obj.when;
+    this.fact = obj.fact;
+}
+
+function dspInfo() {
+
+    let dinos = [];
+     
+    // Create Dino Objects
+    Dinos.forEach( element => dinos.push( new Dino( element ) ) );
+
+    // Use IIFE to get human data from form
+    (function() {
+        human.weight = document.getElementById('weight').value;
+        human.height = Number(document.getElementById('feet').value) * 12 + 
+            Number(document.getElementById('inches').value);
+        human.diet = document.getElementById('diet').value;
+        human.name = document.getElementById('name').value;
+    })();
+
+    // Generate Tiles for each Dino in Array
+    dinos.forEach(element => {
+        let tile = document.createElement('div');
+        tile.className = 'grid-item';
+
+        let h3 = document.createElement('h3');
+        h3.innerHTML = element.species;
+        tile.appendChild( h3 );
+
+        let img = document.createElement('img');
+        img.src = './images/' + element.species + '.png';
+        tile.appendChild( img );
+
+        // get fact
+        let fact = getFact( element );
+        let p = document.createElement('p');
+        p.innerHTML = fact;
+        tile.appendChild( p );
+
+        // Add tiles to DOM
+        document.getElementById("grid").appendChild( tile );
+    })
+
+    // Generate human tile
+    let tile = document.createElement('div');
+    tile.className = 'grid-item';
+
+    let h3 = document.createElement('h3');
+    h3.innerHTML = human.name;
+    tile.appendChild( h3 );
+
+    let img = document.createElement('img');
+    img.src = './images/' + 'human' + '.png';
+    tile.appendChild( img );
+
+    // Add tile to DOM
+    let parent = document.getElementById("grid");
+    parent.insertBefore(tile, parent.children[4]);
+
+    // Remove form from screen
+    document.getElementById("dino-compare").hidden = true;
+}
+
+// On button click, prepare and display infographic
+document.getElementById('btn').addEventListener('click', dspInfo );
